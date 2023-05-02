@@ -1,0 +1,65 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: user9-poi-backend-app-dev
+  annotations:
+    argocd/app-name: user9-poi-backend-app-dev
+    backstage.io/kubernetes-id: user9-poi-backend-app-dev
+    backstage.io/kubernetes-namespace: user9
+    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/instance=user9-poi-backend-app-dev'
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: janus-rbrc5/user9-backend
+  tags:
+    - java
+    - quarkus
+    - maven
+    - workshop
+  links:
+    - url: https://console-openshift-console.cluster-rbrc5.rbrc5.sandbox1759.opentlc.com/dev-pipelines/ns/user9/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.cluster-rbrc5.rbrc5.sandbox1759.opentlc.com/k8s/ns/user9/deployments/poi-backend-app
+      title: Deployment
+      icon: web
+    - url: https://devspaces.cluster-rbrc5.rbrc5.sandbox1759.opentlc.com/#https://github.com/janus-rbrc5/user9-backend?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "user:ryanj"
+  system: workshop-system-user9
+  providesApis:
+    - parks-api-user9
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system-user9
+  tags:
+    - backstage
+    - janus-idp
+    - openshift
+    - workshop
+    - rh-summit
+spec:
+  owner: "user:ryanj"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: parks-api-user9
+  description: API surface used by workshop attendees to initialize and load parks data
+  links:
+    - url: http://poi-backend-app-user9.cluster-rbrc5.rbrc5.sandbox1759.opentlc.com/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/janus-rbrc5/user9-backend/tree/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "user:ryanj"
+  definition:
+    $text: https://github.com/janus-rbrc5/user9-backend/tree/main/src/main/resources/META-INF/openapi.yaml
